@@ -1,0 +1,11 @@
+{
+  "name": "mortagecalculator",
+  "version": "1.0.0",
+  "description": "Coding Challenge Mortage Calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tin@nuku.com.ar",
+  "license": "ISC"
+}
