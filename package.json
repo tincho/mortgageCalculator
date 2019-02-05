@@ -4,8 +4,15 @@
   "description": "Coding Challenge Mortage Calculator",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "tin@nuku.com.ar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-airbnb": "^3.2.0",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "mocha": "^5.2.0"
+  }
 }
