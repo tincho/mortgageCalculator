@@ -1,0 +1,46 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+    background-color: transparent;
+}
+fieldset {
+    border: none;
+}
+legend {
+    border-bottom: 2px solid gray;
+    padding: 15px;
+    margin: auto;
+}
+main {
+    width: 80%;
+    margin: auto;
+    background-color: white;
+}
+
+input[type=text] {
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+input[type=text]:focus {
+    outline: none;
+    border-color:#111;
+}
+
+
+.input-currency {
+    position: relative;
+}
+.input-currency input {
+    padding-left:25px;
+}
+
+.input-currency:before {
+    position: absolute;
+    top: 0;
+    content:"$";
+    left: 10px;
+}
+
+.error-message {
+    display: none;
+}
