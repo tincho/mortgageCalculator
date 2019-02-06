@@ -21,6 +21,11 @@ describe('calc module', () => {
     assert.deepEqual(expectedKeys, Object.keys(q).sort());
   });
 
+  it('should apply formula', () => {
+    const q = calculateResults(sampleInput);
+    assert.equal(q.principleAndInterest.toFixed(2), 733.76);
+  });
+
   it('should divide annualInsurance by 12', () => {
     const q = calculateResults(sampleInput);
     assert.equal(q.monthlyInsurance, 25);

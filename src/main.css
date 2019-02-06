@@ -1,6 +1,5 @@
 body {
     font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
-    background-color: transparent;
 }
 fieldset {
     border: none;
@@ -26,7 +25,6 @@ input[type=text]:focus {
     border-color:#111;
 }
 
-
 .input-currency {
     position: relative;
 }
@@ -41,6 +39,10 @@ input[type=text]:focus {
     left: 10px;
 }
 
-.error-message {
+
+.field-wrapper .error-message {
     display: none;
+}
+.field-wrapper.field-error .error-message {
+    display: block;
 }

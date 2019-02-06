@@ -20,12 +20,15 @@ class ValidationError extends Error {
 function getValues(fieldIds, form = '') {
   const fieldValue = id => $(`${form} #${id}`).value;
 
-  // harvest values from UI
-  return fieldIds.reduce((state, field) => Object.assign(state, {
+  return fieldIds.reduce((values, field) => Object.assign(values, {
     [field]: fieldValue(field),
   }), {});
 }
 
+/**
+ * Set result values into view
+ * @param {Object} results As they come from calc module
+ */
 function setValues(results) {
   const setResultValue = (result, value) => {
     const formatCurrency = v => parseFloat(v).toFixed(2);
@@ -38,61 +41,87 @@ function setValues(results) {
   });
 }
 
-function calculate(calculatorState) {
-  const results = window.calculateResults(calculatorState);
-  setValues(results);
-}
-
+/**
+ * Validates input values
+ * @param {Array} values Values to validate if all checks pass
+ * @param {...Function} checks Functions that should return true if value is valid
+ * @throws ValidationError
+ */
 function validate(values, checks) {
-  const invalidFields = Object.keys(values).reduce((invalid, key) => {
-    const isValid = checks.reduce((valid, check) => valid && check(values[key]), true);
-    if (!isValid) {
-      invalid.push(key);
-    }
-    return invalid;
-  }, []);
+  const invalidFields = Object.keys(values)
+    .filter(key => checks.some(check => !check(values[key])));
   if (invalidFields.length) throw new ValidationError(invalidFields);
 }
 
+/**
+ * Bind value from an input into another that references its ID inside data-from attr
+ * @param {Element} input Source input
+ */
 const mirrorValue = (input) => {
-  let format = v => v;
-  if (input.step && !Number.isInteger(input.step)) {
-    format = v => parseFloat(v).toFixed(1);
-  }
-  $(`input[data-from='${input.id}']`).value = format(input.value);
+  const copyValue = () => {
+    let format = v => v;
+    if (input.step && !Number.isInteger(input.step)) {
+      format = v => parseFloat(v).toFixed(1);
+    }
+    $(`input[data-from='${input.id}']`).value = format(input.value);
+  };
+  copyValue();
+  input.addEventListener('input', copyValue);
 };
 
-function showValidationMessages(e) {
+/**
+ * Show view validation error messages
+ * @param {ValidationError} e Error thrown by validator
+ */
+function handleInvalid(e) {
+  if (!(e instanceof ValidationError)) {
+    // ignore other types of Error
+    return;
+  }
+  const showMessage = (fieldId) => {
+    $(`#${fieldId}-wrapper`).classList.add('field-error');
+  };
+  const hideMessage = (fieldId) => {
+    $(`#${fieldId}-wrapper`).classList.remove('field-error');
+  };
   e.invalidFields.forEach((fieldId) => {
-    $(`#${fieldId}-wrapper .error-message`).style.display = 'block';
+    showMessage(fieldId);
+    $(`#${fieldId}`).addEventListener('input', () => hideMessage(fieldId));
   });
 }
-window.onload = () => {
-  $.all('input[type=range]').forEach((i) => {
-    mirrorValue(i);
-    i.addEventListener('input', () => mirrorValue(i));
-  });
 
-  // main function
-  $('#calculate').addEventListener('click', () => {
-    const fields = [
-      'yearsOfMortgage',
-      'interestRate',
-      'loanAmount',
-      'annualTax',
-      'annualInsurance',
-    ];
+/**
+ * Init function
+ */
+window.onload = () => {
+  const yearsOfMortgage = $('#yearsOfMortgage');
+  const interestRate = $('#interestRate');
+  mirrorValue(yearsOfMortgage);
+  mirrorValue(interestRate);
+
+  // main functionality
+  const btn = $('#calculate');
+  const fields = [
+    'yearsOfMortgage',
+    'interestRate',
+    'loanAmount',
+    'annualTax',
+    'annualInsurance',
+  ];
+  const validationRules = [
+    // not null not empty
+    v => v && v !== null && v !== '',
+    // number and greater than zero
+    v => parseFloat(v) && parseFloat(v) > 0,
+  ];
+  btn.addEventListener('click', () => {
+    const values = getValues(fields);
     try {
-      const calculatorState = getValues(fields);
-      validate(calculatorState, [
-        v => v && v !== null && v !== '',
-        v => parseFloat(v) && parseFloat(v) > 0,
-      ]);
-      calculate(calculatorState);
+      validate(values, validationRules);
+      const results = window.calculateResults(values);
+      setValues(results);
     } catch (e) {
-      if (e instanceof ValidationError) {
-        showValidationMessages(e);
-      }
+      handleInvalid(e);
     }
   });
 };

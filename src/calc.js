@@ -26,7 +26,7 @@ const calculatePrincipleAndInterest = ({
  * @see calculatePrincipleAndInterest
  * @returns {Object} Calculated values
  */
-window.calculateResults = function calculateResults({
+function calculateResults({
   annualTax,
   annualInsurance,
   ...calculatorState
@@ -42,4 +42,11 @@ window.calculateResults = function calculateResults({
     monthlyInsurance,
     totalMonthlyPayment,
   };
-};
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = calculateResults;
+}
+if (typeof window !== 'undefined') {
+  window.calculateResults = calculateResults;
+}
