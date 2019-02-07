@@ -4,15 +4,28 @@
   "description": "Coding Challenge Mortage Calculator",
   "main": "index.js",
   "scripts": {
+    "build:styles": "sass --watch src/scss:dist/css",
+    "build:scripts": "babel src --out-dir dist/js",
+    "build": "npm run build:styles | npm run build:scripts",
+    "watch:styles": "sass --watch src/scss:dist/css",
+    "watch:scripts": "babel --watch src --out-dir dist/js",
+    "dev": "npm run watch:styles | npm run watch:scripts",
     "test": "mocha"
   },
   "author": "tin@nuku.com.ar",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
     "babel-preset-airbnb": "^3.2.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "sass": "^1.17.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5"
   }
 }

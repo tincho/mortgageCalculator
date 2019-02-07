@@ -5,73 +5,61 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Mortgage Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../dist/css/fonts/style.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="../dist/css/main.css">
 </head>
 <body>
   <header>
     <h1>Mortgage Calculator</h1>
   </header>
   <main role="main">
-    <form>
+    <form id="calculator">
       <fieldset>
         <legend>Change values to calculate your results</legend>
-        
-        
+        <hr>
         <div id="yearsOfMortgage-wrapper" class="field-wrapper">
           <label for="yearsOfMortgage">Years of mortgage</label>
-          
-          <br>
-          
-          <input type="range"
-          name="yearsOfMortgage" id="yearsOfMortgage"
-          value="30" min="1" max="40">
+          <div class="slide-wrapper">
+            <input type="range" class="slide" style="--val: 30; --max: 40; --min: 1"
+            name="yearsOfMortgage" id="yearsOfMortgage"
+            value="30" min="1" max="40">
+          </div>
           <input type="text" min="1" max="40" step="1"
           data-from="yearsOfMortgage" readonly>
-        </div>        
-        <br>        
+        </div>
+
         <div id="interestRate-wrapper" class="field-wrapper">
           <label for="interestRate">Rate of interest (%)</label>
-          
-          <br>
-          
-          
-          <input type="range"
-          name="interestRate" id="interestRate"
-          min="0.1" max="10" step="0.1" value="8.0">
+          <div class="slide-wrapper">
+            <input type="range" class="slide" style="--val: 8.0; --max: 10; --min: 0.1"
+              name="interestRate" id="interestRate"
+              min="0.1" max="10" step="0.1" value="8.0">
+          </div>
           <input type="text" min="0.1" max="10" step="0.1"
-          data-from="interestRate" readonly>
-          
+            data-from="interestRate" readonly>
         </div>
-        
-        <br>
         
         <div id="loanAmount-wrapper" class="field-wrapper">
           <label for="loanAmount">Loan Amount</label>
-          <br>
           <span class="input-currency">
             <input type="text" id="loanAmount">
           </span>
-          <br>
           <small class="error-message">Mandatory field</small>
         </div>
         
         <div id="annualTax-wrapper" class="field-wrapper">
           <label for="annualTax">Annual Tax</label>
-          <br>
           <span class="input-currency">
             <input type="text" id="annualTax">
           </span>
-          <br>
           <small class="error-message">Mandatory field</small>
         </div>
-        <br>
+
         <div id="annualInsurance-wrapper" class="field-wrapper">
           <label for="annualInsurance">Annual Insurance</label>
-          <br>
           <span class="input-currency">
             <input type="text" id="annualInsurance">
           </span>
-          <br>
           <small class="error-message">Mandatory field</small>
         </div>
       </fieldset>
@@ -102,7 +90,8 @@
       </dl>
     </div>
   </main>
-  <script src="calc.js"></script>
-  <script src="app.js"></script>
+  <!-- @todo bundle (and browserify?)-->
+  <script src="../dist/js/calc.js"></script>
+  <script src="../dist/js/app.js"></script>
 </body>
 </html>

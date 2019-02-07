@@ -1,0 +1,236 @@
+$mainColor: #0077c0;
+$textColor: #3e3d3f;
+$mainFont: "Helvetica Neue Light";
+$desktopMin: 767px;
+
+body {
+  font-family: $mainFont, Helvetica, arial, sans-serif;
+  max-width:100%;
+}
+
+header {
+  color: $mainColor;
+
+  h1 {
+    width: 220px;
+    height: 25px;
+    color: #006ea0;
+    font-family: $mainFont;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    line-height: 24px;    
+  }
+}
+
+main {
+  width: 100%;
+  position: relative;
+}
+
+#calculator {
+  padding: 20px;
+  padding-top: 15px;
+  width: 88%;
+  margin:auto;
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  background-color: #ffffff;
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  legend {
+    height: 20px;
+    color: #3e3d3f;
+    font-size: 12px;
+    letter-spacing: 0.21px;
+    line-height: 20px;
+    & + hr {
+      border: none;
+      border-bottom: 1px solid #cacaca;
+      height: 0;
+    }
+
+    @media screen and (min-width: $desktopMin) {
+      font-size: 16px;
+    }  
+  }
+  label {
+    font-weight: 700;
+    font-size: 12px;
+    display: block;
+    @media screen and (min-width: $desktopMin) {
+      font-size: 14px;
+    }
+  }
+
+
+  input[type=range] {
+    &:before {
+      content: attr(min);
+    }
+    &:after {
+      content: attr(max);
+    }
+  }
+
+  .slide-wrapper {
+    width: 100%; /* Width of the outside container */
+  }
+  
+  $thumb-d: 24px;
+  $track-w: 160px;
+  $track-h: 8px;
+  $track-c: #cacaca;
+  $filll-c: #1091cc;
+
+  @mixin track($fill: 0) {
+    border-radius: 100px;
+    box-sizing: border-box;
+    border: none;
+    width: $track-w; height: $track-h;
+    background: $track-c;
+    
+    @if $fill == 1 {
+        .js & {
+            background: linear-gradient($filll-c, $filll-c)
+                0/ var(--sx) 100% no-repeat $track-c
+        }
+    }
+  }
+
+  @mixin fill() {
+    height: $track-h;
+    background: $filll-c
+  }
+
+  @mixin thumb() {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.27);
+    
+    box-sizing: border-box;
+    border: none;
+    width: $thumb-d;
+    height: $thumb-d;
+    border-radius: 50%;
+    background: white;
+  }
+  .slide {
+    &:focus {
+      outline: none;
+    }
+
+    &, &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+    }
+
+    --range: calc(var(--max) - var(--min));
+    --ratio: calc((var(--val) - var(--min))/var(--range));
+    --sx: calc(.5*#{$thumb-d} + var(--ratio)*(100% - #{$thumb-d}));
+    margin: 0;
+    padding: 0;
+    width: $track-w; height: $thumb-d;
+    background: transparent;
+    font: 1em/1 arial, sans-serif;
+    
+    &::-webkit-slider-runnable-track {
+        @include track(1)
+    }
+    &::-moz-range-track { @include track }
+    &::-ms-track { @include track }
+    
+    &::-moz-range-progress { @include fill }
+    &::-ms-fill-lower { @include fill }
+    
+    &::-webkit-slider-thumb {
+        margin-top: .5*($track-h - $thumb-d);
+        @include thumb
+    }
+    &::-moz-range-thumb { @include thumb }
+    &::-ms-thumb {
+        margin-top: 0;
+        @include thumb
+    }
+    
+    &::-ms-tooltip { display: none }
+  }
+
+
+  input[type=text] {
+    border-radius: 4px;
+    padding: 13px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+
+    &:focus {
+      outline: none;
+      border-color:#111;
+    }
+
+    @media screen and (min-width: $desktopMin) {
+      font-size: 16px;
+    }
+  }
+
+  .input-currency {
+    position: relative;
+
+    input {
+      /* width: 100%; */
+      text-indent: 20px;
+      @media screen and (min-width: $desktopMin) {
+        text-indent:40px;
+      }
+    }
+  
+    &:before {
+      font-size: 14px;
+      position: absolute;
+      top: 0;
+      content: "$";
+      left: 15px;
+      
+      @media screen and (min-width: $desktopMin) {
+        left: 25px;
+        font-size: 16px;
+      }
+    
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    padding-top: 13px;
+    padding-bottom: 12px;
+    font-weight: 700;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    background-color: $mainColor;
+    color: white;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .field-wrapper .error-message {
+    display: none;
+  }
+  .field-wrapper.field-error .error-message {
+    display: block;
+  }
+
+  /* #loanAmont-wrapper {
+    width: 100%;
+  }
+  #annualTax-wrapper {
+    width: 50%;
+  }
+  #annualInsurance-wrapper {
+    width: 50%;
+  } */
+
+}

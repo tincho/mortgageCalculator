@@ -1,6 +1,4 @@
 
-// import calculateResults from './calc';
-// const calculateResults = require('./calc');
 const $ = sel => document.querySelector(sel);
 $.all = sel => document.querySelectorAll(sel);
 
@@ -98,6 +96,13 @@ window.onload = () => {
   const interestRate = $('#interestRate');
   mirrorValue(yearsOfMortgage);
   mirrorValue(interestRate);
+  document.documentElement.classList.add('js');
+  yearsOfMortgage.addEventListener('input', () => {
+    yearsOfMortgage.style.setProperty('--val', +yearsOfMortgage.value);
+  }, false);
+  interestRate.addEventListener('input', () => {
+    interestRate.style.setProperty('--val', +interestRate.value);
+  }, false);
 
   // main functionality
   const btn = $('#calculate');
@@ -118,7 +123,7 @@ window.onload = () => {
     const values = getValues(fields);
     try {
       validate(values, validationRules);
-      const results = window.calculateResults(values);
+      const results = window.calculateMortgage(values);
       setValues(results);
     } catch (e) {
       handleInvalid(e);
