@@ -3,27 +3,27 @@
 ## How to run
 
 ```shell
-
 npm install
-
-npm run build
-
 ```
 
-Builds files from `src/` (JS, SCSS) to `dist/`
+Builds files from `src/` (JS, SCSS) to `dist/`.
+
+
+If for some reason install failed, run manually `npm run build` after installing.
 
 
 To see the application, access `dist/index.html` from a browser.
 
 ## Live (development) mode 
 
-**Warning!** probably this won't work on Windows, as it uses a shell pipe (`|`) to launch two processes at the same time. If needed, install [`concurrently`](http://npmjs.com/package/concurrently)
-
 ```shell
 npm run dev
 ```
 
 Watches for changes inside `src/` files
+
+
+> **Warning!** probably this won't work on Windows, as it uses a shell pipe (`|`) to launch two processes at the same time. If needed, install and use [`concurrently`](http://npmjs.com/package/concurrently), or the `start` command.
 
 ## Run tests
 

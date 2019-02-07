@@ -4,9 +4,10 @@
   "description": "Coding Challenge Mortage Calculator",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run build",
     "build:styles": "sass --watch src/scss:dist/css",
     "build:scripts": "babel src --out-dir dist/js",
-    "build": "npm run build:styles | npm run build:scripts",
+    "build": "npm run build:styles && npm run build:scripts",
     "watch:styles": "sass --watch src/scss:dist/css",
     "watch:scripts": "babel --watch src --out-dir dist/js",
     "dev": "npm run watch:styles | npm run watch:scripts",
