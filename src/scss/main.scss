@@ -29,13 +29,8 @@ header {
   }
 }
 
-main {
-  width: 100%;
-  position: relative;
-}
-
 #calculator {
-  width: 85%;
+  width: 80%;
   padding: 20px;
   padding-top: 15px;
   margin:auto;
@@ -74,16 +69,18 @@ main {
     }
   }
 
-
+  /**
+   * Show min and max values at the sides of range inputs
+   */
   @mixin indicator($value) {
     content: attr($value);
     @if $value == min {
-      margin-right: 10px;
+      margin-right: 5px;
       width: 20px;
       display: inline-block;
     }
     @if $value == max {
-      margin-left: 10px;
+      margin-left: 5px;
     }
     font-size: 14px;
     vertical-align: sub;
@@ -99,6 +96,9 @@ main {
     display: inline-block;
   }
 
+  /**
+  * wrapper around, and text input next to range inputs
+  */
   .slide-wrapper {
     display: inline-block;
     width: 100%;
@@ -106,14 +106,20 @@ main {
     input[type=text] {
       float: right;
       width: 20px;
-      padding: 12px 14px 12px 14px;
+      padding: 11px 14px 11px 14px;
       text-align: center;
       letter-spacing: 0.28px;
+      font-size: 14px;
+      line-height: 14px;
     }
   }
   
+  /**
+   * Style thumb, track and progress of range inputs
+   * (I've learned a lot about this from here https://css-tricks.com/sliding-nightmare-understanding-range-input/)
+   */
   $thumb-d: 24px;
-  $track-w: 80%;
+  $track-w: 75%;
   $track-h: 8px;
   $track-c: #cacaca;
   $filll-c: #1091cc;
@@ -126,10 +132,10 @@ main {
     background: $track-c;
     
     @if $fill == 1 {
-        .js & {
-            background: linear-gradient($filll-c, $filll-c)
-                0/ var(--sx) 100% no-repeat $track-c
-        }
+      .js & {
+        background: linear-gradient($filll-c, $filll-c)
+            0/ var(--sx) 100% no-repeat $track-c
+      }
     }
   }
 
@@ -204,6 +210,10 @@ main {
     }
   }
 
+
+  /**
+   * style for adding dollar sign before currency fields
+   */
   .input-currency {
     position: relative;
 
@@ -229,6 +239,10 @@ main {
     }
   }
 
+
+  /**
+   * Calculate button
+   */
   button {
     margin-top: 20px;
     padding-top: 13px;
@@ -245,9 +259,13 @@ main {
     }
   }
 
+  /**
+   * Common styles for fields, labels and errors
+   */
   .field-wrapper {
     label {
       margin-top: 8px;
+      margin-bottom: 5px;
     }
     .error-message {
       color: $errorColor;
@@ -280,4 +298,65 @@ main {
     float: left;
   }
 
+  @media screen and (min-width: $desktopMin) {
+    width: 60%;
+    float: left;
+  }
+}
+
+#results {
+  z-index: -1;
+  position: relative;
+  padding: 40px 20px 30px 20px;
+  width: 80%;
+  margin: auto;
+  margin-top: -20px;
+  background-color: #eaf6fa;
+
+  h2 {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  dl {
+    padding: 15px 0;
+    margin: 0;
+    border-bottom: 1px solid #b2b2b2;;
+    &:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  dt {
+    color: #3e3d3f;
+    font-size: 12px;
+    font-family: "SF UI Display Light";
+    display: inline;
+    letter-spacing: 0.8px;
+  }
+  dd {
+    color: #3e3d3f;
+    float: right;
+    font-family: "SF UI Display Bold";
+    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+
+    &:not(:empty):before {
+      content: " $  ";
+    }
+
+  }
+  #totalMonthlyPayment dd {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: $desktopMin) {
+    width: 30%;
+    float:left;
+  }
 }

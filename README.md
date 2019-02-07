@@ -17,6 +17,8 @@ To see the application, access `dist/index.html` from a browser.
 
 ## Live (development) mode 
 
+**Warning!** probably this won't work on Windows, as it uses a shell pipe (`|`) to launch two processes at the same time. If needed, install [`concurrently`](http://npmjs.com/package/concurrently)
+
 ```shell
 npm run dev
 ```

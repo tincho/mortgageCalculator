@@ -2,11 +2,22 @@
 const $ = sel => document.querySelector(sel);
 $.all = sel => document.querySelectorAll(sel);
 
+/**
+ * Handle an event for only one time
+ */
+const once = (el, ev, fn) => {
+  const handleAndRemove = () => {
+    fn();
+    el.removeEventListener(ev, handleAndRemove);
+  }
+  el.addEventListener(ev, handleAndRemove);
+};
+
 class ValidationError extends Error {
   constructor(invalidFields) {
     super('Form has invalid fields');
-    this.invalidFields = invalidFields;
     this.name = 'ValidationError';
+    this.invalidFields = invalidFields;
   }
 }
 
@@ -55,12 +66,12 @@ function validate(values, checks) {
  * Bind value from an input into another that references its ID inside data-from attr
  * @param {Element} input Source input
  */
-const mirrorValue = (input) => {
+function mirrorValue(input) {
   const copyValue = () => {
     let format = v => v;
     if (input.step && !Number.isInteger(input.step)) {
       format = (v) => {
-        if (parseInt(v) == 10) return v;
+        if (parseFloat(v) === 10) return v;
         return parseFloat(v).toFixed(1);
       }
     }
@@ -87,7 +98,7 @@ function handleInvalid(e) {
   };
   e.invalidFields.forEach((fieldId) => {
     showMessage(fieldId);
-    $(`#${fieldId}`).addEventListener('input', () => hideMessage(fieldId));
+    once($(`#${fieldId}`), 'input', () => { hideMessage(fieldId); });
   });
 }
 
@@ -97,8 +108,12 @@ function handleInvalid(e) {
 window.onload = () => {
   const yearsOfMortgage = $('#yearsOfMortgage');
   const interestRate = $('#interestRate');
+
+  // this binds range value to a readonly field
   mirrorValue(yearsOfMortgage);
   mirrorValue(interestRate);
+
+  // this is needed for custom slider styles on range input
   document.documentElement.classList.add('js');
   yearsOfMortgage.addEventListener('input', () => {
     yearsOfMortgage.style.setProperty('--val', +yearsOfMortgage.value);
@@ -108,7 +123,7 @@ window.onload = () => {
   }, false);
 
   // main functionality
-  const btn = $('#calculate');
+  const form = $('#calculator');
   const fields = [
     'yearsOfMortgage',
     'interestRate',
@@ -122,15 +137,29 @@ window.onload = () => {
     // number and greater than zero
     v => parseFloat(v) && parseFloat(v) > 0,
   ];
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    // calculate(fields, validationRules?);
     const values = getValues(fields);
     try {
       validate(values, validationRules);
       const results = window.calculateMortgage(values);
       setValues(results);
-    } catch (e) {
-      handleInvalid(e);
+    } catch (err) {
+      handleInvalid(err);
+      return;
     }
+    // -- end
+
+    const btn = $('#calculate');
+    once(form, 'input', () => { btn.innerText = 'Recalculate'; })
   });
 };
+
+// @TODO remove before deploy
+window.testApp = () => {
+  $('#loanAmount').value = 100000;
+  $('#annualTax').value = 1000;
+  $('#annualInsurance').value = 300;
+  $('form').dispatchEvent(new Event('submit'));
+}
