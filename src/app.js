@@ -103,8 +103,6 @@ function handleInvalid(e) {
   });
 }
 
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
 /**
  * Init function
  */
@@ -166,6 +164,8 @@ window.onload = () => {
     // -- end
 
     $('main').classList.add('has-results');
+    // const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isMobile = window.innerWidth < 870;
     if (isMobile) {
       window.scrollIt($('#results'), 300);
     }
