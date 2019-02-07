@@ -3,6 +3,7 @@ $textColor: #3e3d3f;
 $inputColor: #0d0d0d;
 $errorColor: #da3535;
 $mainFont: "Helvetica Neue Light";
+
 $desktopMin: 768px;
 $desktopMedium: 1024px;
 
@@ -10,7 +11,7 @@ body {
   scroll-behavior: smooth;
   font-family: $mainFont, Helvetica, arial, sans-serif;
   margin: 0;
-  padding-bottom: 50px;
+  padding-bottom: 250px;
 }
 
 header {
@@ -29,13 +30,20 @@ header {
     line-height: 24px;
     padding-bottom: 5px;
     border-bottom: 1px solid #cacaca;
+    @media screen and (min-width: $desktopMin) {
+      color: #005175;
+      font-size: 22px;
+      line-height: 30px;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
+    }
   }
 }
 
 main {
   scroll-behavior: smooth;
   @media screen and (min-width: $desktopMin) {
-    width: 80%;
+    width: 85%;
     margin: auto;
   }
 }
@@ -96,6 +104,9 @@ main {
     }
     font-size: 14px;
     vertical-align: sub;
+    @media screen and (min-width: $desktopMin) {
+      font-size: 16px;
+    }
   }
   input[type=range] {
     &:before {
@@ -123,6 +134,14 @@ main {
       letter-spacing: 0.28px;
       font-size: 14px;
       line-height: 14px;
+      @media screen and (min-width: $desktopMin) {
+        font-size: 16px;
+        line-height: 16px;
+        width: 60px;
+        padding: 13px 17px 12px 17px;
+        box-sizing: border-box;
+      }
+  
     }
   }
   
@@ -188,9 +207,6 @@ main {
     @media screen and (min-width: $desktopMin) {
       width: 85%;
     }
-    @media screen and (min-width: $desktopMedium) {
-      width: 88%;
-    }
 
 
     height: $thumb-d;
@@ -243,22 +259,19 @@ main {
     input {
       box-sizing: border-box;
       width: 100%;
-      text-indent: 20px;
+      text-indent: 15px;
       @media screen and (min-width: $desktopMin) {
-        text-indent:40px;
+        text-indent:30px;
       }
-    }
-  
+    }  
     &:before {
       position: absolute;
       top: 0;
       content: "$";
       left: 15px;
-      
       @media screen and (min-width: $desktopMin) {
         left: 25px;
       }
-    
     }
   }
 
@@ -292,7 +305,6 @@ main {
     display: none;
   }
   @media screen and (min-width: $desktopMin) {
-    display: block;
     .hidden-md {
       display: none !important;
     }
@@ -345,8 +357,14 @@ main {
     float: left;
   }
 
+
+  /**
+    form: desktop
+  */
   @media screen and (min-width: $desktopMin) {
     max-width: 60%;
+    padding: 40px;
+    padding-top: 30px;
     display: inline-block;
     vertical-align: middle;
   }
@@ -363,7 +381,9 @@ main {
   z-index: -1;
   position: relative;
   padding: 40px 20px 30px 20px;
-  width: 80%;
+  @media screen and (max-width: $desktopMin) {
+    width: 80%;
+  }
   margin: auto;
   margin-top: -20px;
   background-color: #eaf6fa;
@@ -374,16 +394,23 @@ main {
     font-weight: 500;
     margin: 0;
     letter-spacing: 0.5px;
+    @media screen and (min-width: $desktopMin) {
+      font-size: 26px;
+      .writing & {
+        font-size: 22px;
+      }
+    }
   }
 
   dl {
     padding: 15px 0;
     margin: 0;
-    border-bottom: 1px solid #b2b2b2;;
+    border-bottom: 1px solid #b2b2b2;
     &:last-of-type {
       border-bottom: none;
       padding-bottom: 0;
       @media screen and (min-width: $desktopMin) {
+        border-top: 1px solid #cbcbcb;
         dt {
           font-size: 18px;
         }
@@ -429,8 +456,8 @@ main {
         opacity: 0.2;
       }
     }
-
   }
+
   #totalMonthlyPayment dd {
     font-size: 18px;
     @media screen and (min-width: $desktopMin) {
@@ -438,10 +465,13 @@ main {
     }
   }
 
+  /**
+  * results: desktop
+  */
   @media screen and (min-width: $desktopMin) {
-    width: 30%;
     display: inline-block;
     vertical-align: middle;
     margin-left: -10px;
+    padding: 40px;
   }
 }

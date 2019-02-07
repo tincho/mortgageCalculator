@@ -9,7 +9,7 @@ const once = (el, ev, fn) => {
   const handleAndRemove = () => {
     fn();
     el.removeEventListener(ev, handleAndRemove);
-  }
+  };
   el.addEventListener(ev, handleAndRemove);
 };
 
@@ -73,13 +73,13 @@ function mirrorValue(input) {
       format = (v) => {
         if (parseFloat(v) === 10) return v;
         return parseFloat(v).toFixed(1);
-      }
+      };
     }
     $(`input[data-from='${input.id}']`).value = format(input.value);
   };
   copyValue();
   input.addEventListener('input', copyValue);
-};
+}
 
 /**
  * Show view validation error messages
@@ -98,9 +98,12 @@ function handleInvalid(e) {
   };
   e.invalidFields.forEach((fieldId) => {
     showMessage(fieldId);
+    // @FIXME: if value is set programatically, this message wont hide
     once($(`#${fieldId}`), 'input', () => { hideMessage(fieldId); });
   });
 }
+
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 /**
  * Init function
@@ -122,6 +125,16 @@ window.onload = () => {
     interestRate.style.setProperty('--val', +interestRate.value);
   }, false);
 
+  ['loanAmount', 'annualTax', 'annualInsurance'].forEach((fieldId) => {
+    const field = $(`#${fieldId}`);
+    field.addEventListener('focus', () => {
+      $('main').classList.add('writing');
+    });
+    field.addEventListener('blur', () => {
+      $('main').classList.remove('writing');
+    });
+  });
+
   // main functionality
   const form = $('#calculator');
   const fields = [
@@ -139,12 +152,12 @@ window.onload = () => {
   ];
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
+    $.all('.field-error').forEach(e => e.classList.remove('field-error'));
     // calculate(fields, validationRules?);
     const values = getValues(fields);
     try {
       validate(values, validationRules);
       const results = window.calculateMortgage(values);
-      $('main').classList.add('has-results');
       setValues(results);
     } catch (err) {
       handleInvalid(err);
@@ -152,9 +165,12 @@ window.onload = () => {
     }
     // -- end
 
-    window.scrollIt($('#results'), 500, 'easeOutQuad'); 
+    $('main').classList.add('has-results');
+    if (isMobile) {
+      window.scrollIt($('#results'), 300);
+    }
     const btn = $('#calculate');
-    once(form, 'input', () => { btn.innerText = 'Recalculate'; })
+    once(form, 'input', () => { btn.innerText = 'Recalculate'; });
   });
 };
 
@@ -164,4 +180,4 @@ window.testApp = () => {
   $('#annualTax').value = 1000;
   $('#annualInsurance').value = 300;
   $('form').dispatchEvent(new Event('submit'));
-}
+};

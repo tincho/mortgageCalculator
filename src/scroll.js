@@ -1,5 +1,14 @@
-function scrollIt(destination, duration = 200, easing = 'linear', callback) {
+/* eslint-disable */
 
+/**
+ * Animated scroll to the position of an element
+ * Copied from https://pawelgrzybek.com/page-scroll-in-vanilla-javascript/
+ * @param {Element} destination Where to scroll
+ * @param {Number} duration Time in ms
+ * @param {String} easing Easing function to use
+ * @param {Function} callback Optional function to call on finish animation
+ */
+function scrollIt(destination, duration = 200, easing = 'linear', callback) {
   const easings = {
     linear(t) {
       return t;
