@@ -1,5 +1,5 @@
 const assert = require('assert');
-const calculateResults = require('../src/calc');
+const calculateMortgage = require('../src/calc');
 
 describe('calc module', () => {
   const sampleInput = {
@@ -11,7 +11,7 @@ describe('calc module', () => {
   };
 
   it('should return these 4 values', () => {
-    const q = calculateResults(sampleInput);
+    const q = calculateMortgage(sampleInput);
     const expectedKeys = [
       'monthlyInsurance',
       'monthlyTax',
@@ -22,17 +22,24 @@ describe('calc module', () => {
   });
 
   it('should apply formula', () => {
-    const q = calculateResults(sampleInput);
+    const q = calculateMortgage(sampleInput);
     assert.equal(q.principleAndInterest.toFixed(2), 733.76);
   });
 
   it('should divide annualInsurance by 12', () => {
-    const q = calculateResults(sampleInput);
+    const q = calculateMortgage(sampleInput);
     assert.equal(q.monthlyInsurance, 25);
   });
 
   it('should divide annualTax by 12', () => {
-    const q = calculateResults(sampleInput);
+    const q = calculateMortgage(sampleInput);
     assert.equal(Math.floor(q.monthlyTax), 83);
   });
+
+  it('should sum principle, tax and insurance to get total', () => {
+    const q = calculateMortgage(sampleInput);
+    const sum = q.principleAndInterest + q.monthlyTax + q.monthlyInsurance;
+    assert.equal(q.totalMonthlyPayment, sum);
+  });
+
 });

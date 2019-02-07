@@ -26,7 +26,7 @@ const calculatePrincipleAndInterest = ({
  * @see calculatePrincipleAndInterest
  * @returns {Object} Calculated values
  */
-function calculateResults({
+function calculateMortgage({
   annualTax,
   annualInsurance,
   ...calculatorState
@@ -44,9 +44,8 @@ function calculateResults({
   };
 }
 
-if (typeof module !== 'undefined') {
-  module.exports = calculateResults;
-}
-if (typeof window !== 'undefined') {
-  window.calculateResults = calculateResults;
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = calculateMortgage;
+} else {
+  window.calculateMortgage = calculateMortgage;
 }
