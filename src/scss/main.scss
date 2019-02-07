@@ -3,7 +3,8 @@ $textColor: #3e3d3f;
 $inputColor: #0d0d0d;
 $errorColor: #da3535;
 $mainFont: "Helvetica Neue Light";
-$desktopMin: 767px;
+$desktopMin: 768px;
+$desktopMedium: 1024px;
 
 body {
   scroll-behavior: smooth;
@@ -185,8 +186,13 @@ main {
     width: $track-w;
 
     @media screen and (min-width: $desktopMin) {
-      width: 90%;
+      width: 85%;
     }
+    @media screen and (min-width: $desktopMedium) {
+      width: 88%;
+    }
+
+
     height: $thumb-d;
     background: transparent;
     font: 1em/1 arial, sans-serif;
@@ -282,6 +288,15 @@ main {
   /**
    * Common styles for fields, labels and errors
    */
+  .visible-md {
+    display: none;
+  }
+  @media screen and (min-width: $desktopMin) {
+    display: block;
+    .hidden-md {
+      display: none !important;
+    }
+  }
   .field-wrapper {
     label {
       margin-top: 8px;
@@ -293,13 +308,25 @@ main {
       line-height: 13px;
       font-family: "Helvetica Neue Bold";
       display: none;
+      @media screen and (min-width: $desktopMin) {
+        font-size: 12px;
+        line-height: 15px;
+      }
     }
     &.field-error {
       input {
         border-color: $errorColor;
       }
-      .error-message {
+      .error-message.hidden-md {
         display: block;
+      }
+      @media screen and (min-width: $desktopMin) {
+        .error-message.hidden-md {
+          display: none;
+        }
+        .error-message.visible-md {
+          display: block;
+        }
       }
     } 
     
@@ -356,6 +383,14 @@ main {
     &:last-of-type {
       border-bottom: none;
       padding-bottom: 0;
+      @media screen and (min-width: $desktopMin) {
+        dt {
+          font-size: 18px;
+        }
+      }
+    }
+    @media screen and (min-width: $desktopMin) {
+      border: none;
     }
   }
 
@@ -365,6 +400,11 @@ main {
     font-family: "SF UI Display Light";
     display: inline;
     letter-spacing: 0.8px;
+    @media screen and (min-width: $desktopMin) {
+      font-family: "Helvetica Neue Light";
+      letter-spacing: 0.2px;
+      font-size: 14px;
+    }
   }
   dd {
     color: #3e3d3f;
@@ -378,9 +418,12 @@ main {
       content: " $  ";
     }
     @media screen and (min-width: $desktopMin) {
+      font-family: "Helvetica Neue Bold";
+      font-weight: bold;
       float: none;
       margin-top: 10px;
       margin-left: 0;
+      font-size: 18px;
       &:empty:before {
         content: " $ - -";
         opacity: 0.2;
@@ -390,6 +433,9 @@ main {
   }
   #totalMonthlyPayment dd {
     font-size: 18px;
+    @media screen and (min-width: $desktopMin) {
+      font-size: 30px;
+    }
   }
 
   @media screen and (min-width: $desktopMin) {
