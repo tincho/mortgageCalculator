@@ -1,5 +1,6 @@
 node_modules
 dist/css/*.css
+!dist/css/.empty
 dist/js/*
 !dist/js/.empty
 

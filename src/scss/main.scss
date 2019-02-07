@@ -7,20 +7,25 @@ $desktopMin: 767px;
 
 body {
   font-family: $mainFont, Helvetica, arial, sans-serif;
+  margin: 0;
 }
 
 header {
-  color: $mainColor;
+
+  padding-left: 20px;
+  box-sizing: border-box;
+  width: 100%;
 
   h1 {
-    width: 220px;
     height: 25px;
     color: #006ea0;
     font-family: $mainFont;
     font-size: 20px;
     font-weight: 300;
     letter-spacing: 0.5px;
-    line-height: 24px;    
+    line-height: 24px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #cacaca;
   }
 }
 
@@ -30,6 +35,7 @@ main {
 }
 
 #calculator {
+  width: 85%;
   padding: 20px;
   padding-top: 15px;
   margin:auto;
@@ -52,6 +58,7 @@ main {
       border: none;
       border-bottom: 1px solid #cacaca;
       height: 0;
+      margin-bottom: 20px;
     }
 
     @media screen and (min-width: $desktopMin) {
@@ -76,7 +83,7 @@ main {
       display: inline-block;
     }
     @if $value == max {
-      margin-left: 15px;
+      margin-left: 10px;
     }
     font-size: 14px;
     vertical-align: sub;
@@ -98,13 +105,15 @@ main {
     
     input[type=text] {
       float: right;
-      max-width: 37px;
+      width: 20px;
+      padding: 12px 14px 12px 14px;
       text-align: center;
+      letter-spacing: 0.28px;
     }
   }
   
   $thumb-d: 24px;
-  $track-w: 68%;
+  $track-w: 80%;
   $track-h: 8px;
   $track-c: #cacaca;
   $filll-c: #1091cc;
@@ -243,6 +252,7 @@ main {
     .error-message {
       color: $errorColor;
       font-size: 10px;
+      line-height: 13px;
       font-family: "Helvetica Neue Bold";
       display: none;
     }
@@ -251,7 +261,6 @@ main {
         border-color: $errorColor;
       }
       .error-message {
-        
         display: block;
       }
     } 

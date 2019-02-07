@@ -59,7 +59,10 @@ const mirrorValue = (input) => {
   const copyValue = () => {
     let format = v => v;
     if (input.step && !Number.isInteger(input.step)) {
-      format = v => parseFloat(v).toFixed(1);
+      format = (v) => {
+        if (parseInt(v) == 10) return v;
+        return parseFloat(v).toFixed(1);
+      }
     }
     $(`input[data-from='${input.id}']`).value = format(input.value);
   };
