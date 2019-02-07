@@ -119,7 +119,8 @@ window.onload = () => {
     // number and greater than zero
     v => parseFloat(v) && parseFloat(v) > 0,
   ];
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
     const values = getValues(fields);
     try {
       validate(values, validationRules);
