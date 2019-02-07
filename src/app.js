@@ -151,7 +151,6 @@ window.onload = () => {
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
     $.all('.field-error').forEach(e => e.classList.remove('field-error'));
-    // calculate(fields, validationRules?);
     const values = getValues(fields);
     try {
       validate(values, validationRules);
@@ -164,7 +163,6 @@ window.onload = () => {
     // -- end
 
     $('main').classList.add('has-results');
-    // const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const isMobile = window.innerWidth < 870;
     if (isMobile) {
       window.scrollIt($('#results'), 300);
@@ -172,12 +170,4 @@ window.onload = () => {
     const btn = $('#calculate');
     once(form, 'input', () => { btn.innerText = 'Recalculate'; });
   });
-};
-
-// @TODO remove before deploy
-window.testApp = () => {
-  $('#loanAmount').value = 100000;
-  $('#annualTax').value = 1000;
-  $('#annualInsurance').value = 300;
-  $('form').dispatchEvent(new Event('submit'));
 };
