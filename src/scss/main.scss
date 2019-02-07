@@ -6,8 +6,10 @@ $mainFont: "Helvetica Neue Light";
 $desktopMin: 767px;
 
 body {
+  scroll-behavior: smooth;
   font-family: $mainFont, Helvetica, arial, sans-serif;
   margin: 0;
+  padding-bottom: 50px;
 }
 
 header {
@@ -29,7 +31,16 @@ header {
   }
 }
 
+main {
+  scroll-behavior: smooth;
+  @media screen and (min-width: $desktopMin) {
+    width: 80%;
+    margin: auto;
+  }
+}
+
 #calculator {
+  scroll-behavior: smooth;
   width: 80%;
   padding: 20px;
   padding-top: 15px;
@@ -128,7 +139,8 @@ header {
     border-radius: 100px;
     box-sizing: border-box;
     border: none;
-    width: $track-w; height: $track-h;
+    width: $track-w;
+    height: $track-h;
     background: $track-c;
     
     @if $fill == 1 {
@@ -170,7 +182,12 @@ header {
     margin: 0;
     margin-top: 8px;
     padding: 0;
-    width: $track-w; height: $thumb-d;
+    width: $track-w;
+
+    @media screen and (min-width: $desktopMin) {
+      width: 90%;
+    }
+    height: $thumb-d;
     background: transparent;
     font: 1em/1 arial, sans-serif;
     
@@ -252,10 +269,13 @@ header {
     border: none;
     border-radius: 4px;
     text-transform: uppercase;
-    background-color: $mainColor;
+    background-color: rgba(0, 119, 192, 0.8);
     color: white;
     &:focus {
       outline: none;
+    }
+    &:active {
+      background-color: rgba(0, 119, 192, 1);
     }
   }
 
@@ -299,12 +319,20 @@ header {
   }
 
   @media screen and (min-width: $desktopMin) {
-    width: 60%;
-    float: left;
+    max-width: 60%;
+    display: inline-block;
+    vertical-align: middle;
   }
 }
 
 #results {
+  display: none;
+  .has-results & {
+    scroll-behavior: smooth;
+    @media screen and (max-width: $desktopMin) {
+      display: block;
+    }
+  }
   z-index: -1;
   position: relative;
   padding: 40px 20px 30px 20px;
@@ -349,6 +377,15 @@ header {
     &:not(:empty):before {
       content: " $  ";
     }
+    @media screen and (min-width: $desktopMin) {
+      float: none;
+      margin-top: 10px;
+      margin-left: 0;
+      &:empty:before {
+        content: " $ - -";
+        opacity: 0.2;
+      }
+    }
 
   }
   #totalMonthlyPayment dd {
@@ -357,6 +394,8 @@ header {
 
   @media screen and (min-width: $desktopMin) {
     width: 30%;
-    float:left;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -10px;
   }
 }

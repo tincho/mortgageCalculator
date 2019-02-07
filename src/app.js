@@ -144,6 +144,7 @@ window.onload = () => {
     try {
       validate(values, validationRules);
       const results = window.calculateMortgage(values);
+      $('main').classList.add('has-results');
       setValues(results);
     } catch (err) {
       handleInvalid(err);
@@ -151,6 +152,7 @@ window.onload = () => {
     }
     // -- end
 
+    window.scrollIt($('#results'), 500, 'easeOutQuad'); 
     const btn = $('#calculate');
     once(form, 'input', () => { btn.innerText = 'Recalculate'; })
   });
