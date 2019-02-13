@@ -8,6 +8,7 @@
     "build:styles": "sass src/scss:dist/css",
     "build:scripts": "babel src --out-dir dist/js",
     "build": "npm run build:styles && npm run build:scripts",
+    "zip": "zip -r calc.zip src/ dist/ test/ package.json .babelrc .eslintrc .eslintignore .git .gitignore README.md",
     "watch:styles": "sass --watch src/scss:dist/css",
     "watch:scripts": "babel --watch src --out-dir dist/js",
     "dev": "npm run watch:styles | npm run watch:scripts",
