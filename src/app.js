@@ -103,6 +103,14 @@ function handleInvalid(e) {
   });
 }
 
+const sanitize = value => value.replace(/[^\d\.\,]/g, '');
+const sanitizeInputs = (fields) => {
+  fields.forEach((fieldId) => {
+    const field = $(`#${fieldId}`);
+    field.value = sanitize(field.value);
+  });
+}
+
 /**
  * Init function
  */
@@ -123,6 +131,7 @@ window.onload = () => {
     interestRate.style.setProperty('--val', +interestRate.value);
   }, false);
 
+  // detect when any of writing inputs is focused/editing
   ['loanAmount', 'annualTax', 'annualInsurance'].forEach((fieldId) => {
     const field = $(`#${fieldId}`);
     field.addEventListener('focus', () => {
@@ -133,7 +142,7 @@ window.onload = () => {
     });
   });
 
-  // main functionality
+  // main functionality:
   const form = $('#calculator');
   const fields = [
     'yearsOfMortgage',
@@ -142,15 +151,21 @@ window.onload = () => {
     'annualTax',
     'annualInsurance',
   ];
+
+  // list of functions that must evaluate true to perform the calculation
   const validationRules = [
     // not null not empty
     v => v && v !== null && v !== '',
     // number and greater than zero
     v => parseFloat(v) && parseFloat(v) > 0,
   ];
+
+  // calculate on form submit
   form.addEventListener('submit', (ev) => {
     ev.preventDefault();
     $.all('.field-error').forEach(e => e.classList.remove('field-error'));
+    // add values sanitization
+    sanitizeInputs(['loanAmount', 'annualTax', 'annualInsurance']);
     const values = getValues(fields);
     try {
       validate(values, validationRules);
